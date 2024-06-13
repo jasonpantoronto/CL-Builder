@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>CL Builder</title>
+        <style>
+            
+
+            #new-user-window {
+                /*Centering*/
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                /*Borders*/
+                border: 1px solid white;
+                border-radius: 5px;
+                width: 350px;
+
+                /*Others*/
+                z-index: 10;
+                background-color: rgb(30, 30, 30);
+
+                /*Hide this window by default*/
+                scale: 0;
+
+                /*Provides transition*/
+                transition: 200ms ease-in-out;
+            }
+
+            #new-user-window.active {
+                scale: 1;
+            }
+
+            #new-user-window-header {
+                padding: 3%;
+                font-family: monospace;
+                font-size: larger;
+                font-weight: bold;
+            }
+
+            p {
+                color : white;
+                font-family: monospace
+            }
+
+            #new-user-inputs {
+                margin-top: -5%;
+                padding: 3%;
+                
+            }
+
+            #popup-overlay {
+                position: fixed;
+                opacity: 0%;
+
+                /*Causes the element to fill out the entire screen*/
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                
+                background-color: black;
+
+                /*Makes the overlay click through*/
+                pointer-events: none;
+
+                /*Fade in and out the element*/
+                transition: 200ms ease-in-out;
+
+                /*z-index of popup is on 10*/
+                z-index: 9;
+            }
+
+            #popup-overlay.active {
+                opacity: 80%;
+                pointer-events: all;
+            }
+
+            #logo {
+                font-size: xx-large;
+                border: 5px solid white;
+                width: 110px;
+            }
+            body {
+                background-color: rgb(30, 30, 30);
+            }
+
+            button {
+                font-family: monospace;
+                background-color: rgb(30, 30, 30);
+                color: white;
+                margin: 10px;
+                border: 1px solid white;
+                border-radius: 5px;
+            }
+
+            .prompt {/*For spacing out the prompts*/
+                display: flex;
+                justify-content: space-between;
+                font-family: monospace;
+                font-size: larger;
+            }
+
+            #saved-users-box {
+                border: 1px solid white;
+                border-radius: 5px;
+                width: 200px;
+                height: 200px;
+
+            }
+
+            button:hover {
+                background: rgb(90, 90, 90) ;
+            }
+
+            #saved-users-box.empty {
+                border: 1px solid white;
+                border-radius: 5px;
+                width: 200px;
+                height: 200px;
+                color:rgb(90, 90, 90);
+            }
+
+            #saved-users-box-content {
+                line-height: 300%;
+            }
+
+            .instructions {
+                font-weight: bold;
+            }
+
+            #job-input {
+                margin-top: 10px;
+                width: 300px;
+                height: 300px;
+            }
+            #experience-input {
+                margin-top: 10px;
+                width: 300px;
+                height: 300px;
+            }
+
+            input {
+                background-color: gray;
+                justify-content: left;
+                justify-content: top;
+                border: 1px Solid white;
+            }
+
+            textarea {
+                background-color: gray;
+                border: 1px Solid white;
+
+            }
+
+            label {
+                color: white;
+            }
+
+            #prompt-inputs-tick {
+                justify-items: center;/*Makes the ticks center at the x middle as a whole*/
+                align-items: center;/*Makes the ticks center at the y middle as a whole*/
+                border: 1px solid white;
+                width: 500px;
+                height: 150px;
+                display: grid;
+                grid: auto/auto auto auto
+            }
+
+
+        
+        </style>
+    </head>
+    <body>
+        <script src="CL_Builder_Functions.js"></script>
+
+        <p id = "logo">CL Builder Alpha v0.1📝</p>
+        <p class = "instructions">[Step 1: Add/Edit a user]</p>
+        <button id = "new-user-button" onClick = "activateNewUserWindow()"></button>
+
+        <!--New User Popup Window-->
+        <div id = "new-user-window">
+            <!--Title-->
+            <p id = "new-user-window-header">Adding New User:</p>
+            <!--All the inputs-->
+            <div id = "new-user-inputs">
+                    <p class = "prompt">Full Name <input id="name-input" type = "text"></p>
+                    <p class = "prompt">Address <input id = "address-input" type = "text"></p>
+                    <p class = "prompt">Phone Number <input id = "number-input" type = "text"></p>
+                    <p class = "prompt">Email <input id = "email-input" type = "text"></p>
+                <!--The save and cancel button-->
+                <div class= "prompt">
+                    <button id = "cancel-button" onClick="deactivateNewUserWindow()" >Cancel</button>
+                    <button id = "save-button" onClick="saveNewUser()">Save</button>
+                </div>
+            </div>        
+        </div>
+
+        <!--Background tint of the popup-->
+        <div id = "popup-overlay"></div>
+
+        <!--Saved Users Display-->
+        <p>Saved Users:</p>
+        <div id = "saved-users-display">
+            <button id = "saved-users-box">
+                <p id = "saved-users-box-content"></p>
+            </button>
+        </div>
+
+        <button id = "delete-saved-user-button" onclick = "deleteUser()">Delete User</button>
+
+        <p>[Step 2: Fillout/Setup the letter]</p>
+
+        <div id = "prompt inputs-date">
+            <p>Date: <input id = "date-input" type="text"></p>
+        </div>
+        <div id = "prompt-inputs-long">
+            <p>Comapany Name: <input id = "company-input"></p>
+            <p>Hiring Manager Name: <input id = "company-input"></p>
+            <p>Job Description (Include Position Info): <br><textarea id = "job-input"></textarea></p>
+            <p>Work Experience (Copy Paste From Resume): <br><textarea id = "experience-input"></textarea></p>
+        </div>
+
+        <p>[Step 3: Select the tone]</p>
+        <div id = "prompt-inputs-tick">
+            <div>
+                <input type = "checkbox" id ="professional" value = "pro" onclick="storeTick(value)">
+                <label for="professional">Professional</label>
+            </div>
+            
+            <div>
+                <input type = "checkbox" id ="formal" value = "for" onclick="storeTick(value)">
+            <label for="formal">Formal</label>
+            </div>
+
+            <div>
+                <input type = "checkbox" id ="optimistic" value = "opt" onclick="storeTick(value)">
+                <label for="Optimistic">Optimistic</label>
+            </div>
+            
+            <!--Will be added later v0.2-->
+            <div>
+                <input type = "checkbox" id ="temp1">
+                <label for="temp1">temp1</label>
+            </div>
+
+            <div>
+                <input type = "checkbox" id ="temp2">
+                <label for="temp2">temp2</label>
+            </div>
+            <div>
+                <input type = "checkbox" id ="temp3">
+                <label for="temp3">temp3</label>
+            </div>
+            <div>
+                <input type = "checkbox" id ="temp4">
+                <label for="temp4">temp4</label>
+            </div>
+
+            <div>
+                <input type = "checkbox" id ="temp5">
+                <label for="temp5">temp5</label>
+            </div>
+
+            <div>
+                <input type = "checkbox" id ="temp6">
+                <label for="temp6">temp6</label>
+            </div>
+
+        </div>
+        <script>
+        
+            
+
+            newUserWindow = document.getElementById("new-user-window");
+            popupOverlay = document.getElementById("popup-overlay");
+            let savedUsersBoxContent = document.getElementById("saved-users-box-content");
+            let newUserButton = document.getElementById("new-user-button");
+            let dateInput = document.getElementById("date-input");
+
+            fillSavedUsersBox();
+
+            dateInput.value = getDate();
+
+            //Object for storing tone selection
+            let toneTicks = {
+                professional: false,
+                formal: false,
+                optimistic: false,
+            }
+        </script>
+    </body>
+</html>
