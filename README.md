@@ -1,4 +1,4 @@
-# CL Bulder #
+# CL Builder #
 **A open source local LLM powered cover letter creator**
 
 ![image](https://github.com/jasonpantoronto/CL-Builder/assets/172641020/dfc5b825-7763-4b98-932f-74384e38107e)
