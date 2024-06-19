@@ -5,7 +5,7 @@
 
 **Description:**
 <br>
-CL Builder allows you to expedite your cover letter creation processs by generating it using a LLM and outputing it as a formatted PDF ready to be subbited to your next job! All you have to do is enter simple information about you and copy paste the job description + your experience and a cover letter will be tailor made for you.
+CL Builder allows you to expedite your cover letter creation process by generating it using a LLM and outputting it as a formatted PDF ready to be submitted to your next job! All you have to do is enter simple information about you and copy paste the job description + your experience and a cover letter will be tailor made for you.
 
 
 **Features:**
@@ -20,11 +20,11 @@ CL Builder allows you to expedite your cover letter creation processs by generat
 - teknium/OpenHermes-2.5-Mistral-7B
 
 **Method:**
-- CL-Builder is primarly build in JS with HTML serving as the frontend of the app
-- The creation of PDF files is made possible using the jsPDF liberary from ajax
+- CL-Builder is primarily build in JS with HTML serving as the frontend of the app
+- The creation of PDF files is made possible using the jsPDF library from ajax
 - JS fetch is used to make API calls to the server ran in Python
 - The backend is a Python server built with the Flask framework
-- The llama-cpp-python framework is used to host the open source LLM; OpenHermes-2.5-Mistral-7B.
+- The llama-cpp-python framework is used to host the open source LLM; OpenHermes-2.5-Mistral-7B
 
 **Credits:**
 - [Flask Cors](https://pypi.org/project/Flask-Cors/)
