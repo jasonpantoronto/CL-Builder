@@ -1,6 +1,8 @@
 # CL Builder #
 **A open source local LLM powered cover letter creator**
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ![image](https://github.com/jasonpantoronto/CL-Builder/assets/172641020/dfc5b825-7763-4b98-932f-74384e38107e)
 
 **Description:**
