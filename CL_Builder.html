@@ -142,14 +142,14 @@
             }
 
             input {
-                background-color: gray;
+                background-color: rgb(80, 80, 80);
                 justify-content: left;
                 justify-content: top;
                 border: 1px Solid white;
             }
 
             textarea {
-                background-color: gray;
+                background-color: rgb(80, 80, 80);
                 border: 1px Solid white;
 
             }
@@ -168,8 +168,33 @@
                 grid: auto/auto auto auto
             }
 
+            #output-cl {
+                background-color: rgb(80, 80, 80);
+                border: 1px Solid white;
+                width: 80%;
+                aspect-ratio: 1/1.41;         
+            }
+
+            #output-cl.empty {
+                text-align: center;
+                align-content: center;
+            }
+
+            #app {
+                display: grid;
+                grid-template-columns: 50% 50%;
+                
+                
+            }
+
+            #right-panel {
+                align-content: center;
+            }
+
+            #left-panel {
+                margin-left: 15%;
+            }
             
-        
         </style>
 
     </head>
@@ -183,103 +208,114 @@
         <!--UI Related Functions-->
         <script src = "CL_Builder_Functions.js"></script>
 
-        <p id = "logo">CL Builder Alpha v0.1📝</p>
-        <p class = "instructions">[Step 1: Add/Edit a user]</p>
-        <button id = "new-user-button" onClick = "activateNewUserWindow()"></button>
-
-        <!--New User Popup Window-->
-        <div id = "new-user-window">
-            <!--Title-->
-            <p id = "new-user-window-header">Adding New User:</p>
-            <!--All the inputs-->
-            <div id = "new-user-inputs">
-                    <p class = "prompt">Full Name <input id="name-input" type = "text"></p>
-                    <p class = "prompt">Address <input id = "address-input" type = "text"></p>
-                    <p class = "prompt">Phone Number <input id = "number-input" type = "text"></p>
-                    <p class = "prompt">Email <input id = "email-input" type = "text"></p>
-                <!--The save and cancel button-->
-                <div class= "prompt">
-                    <button id = "cancel-button" onClick="deactivateNewUserWindow()" >Cancel</button>
-                    <button id = "save-button" onClick="saveNewUser()">Save</button>
+        <div id = "app">
+            <div id = "left-panel">
+                <p id = "logo">CL Builder Alpha v0.1📝</p>
+                <p class = "instructions">[Step 1: Add/Edit a user]</p>
+                <button id = "new-user-button" onClick = "activateNewUserWindow()"></button>
+        
+                <!--New User Popup Window-->
+                <div id = "new-user-window">
+                    <!--Title-->
+                    <p id = "new-user-window-header">Adding New User:</p>
+                    <!--All the inputs-->
+                    <div id = "new-user-inputs">
+                            <p class = "prompt">Full Name <input id="name-input" type = "text"></p>
+                            <p class = "prompt">Address <input id = "address-input" type = "text"></p>
+                            <p class = "prompt">Phone Number <input id = "number-input" type = "text"></p>
+                            <p class = "prompt">Email <input id = "email-input" type = "text"></p>
+                        <!--The save and cancel button-->
+                        <div class= "prompt">
+                            <button id = "cancel-button" onClick="deactivateNewUserWindow()" >Cancel</button>
+                            <button id = "save-button" onClick="saveNewUser()">Save</button>
+                        </div>
+                    </div>        
                 </div>
-            </div>        
+        
+                <!--Background tint of the popup-->
+                <div id = "popup-overlay"></div>
+        
+                <!--Saved Users Display-->
+                <p>Saved Users:</p>
+                <div id = "saved-users-display">
+                    <button id = "saved-users-box">
+                        <p id = "saved-users-box-content"></p>
+                    </button>
+                </div>
+        
+                <button id = "delete-saved-user-button" onclick = "deleteUser()">Delete User</button>
+        
+                <p>[Step 2: Fillout/Setup the letter]</p>
+        
+                <div id = "prompt-inputs-date">
+                    <p>Date: <input id = "date-input" type="text"></p>
+                </div>
+                <div id = "prompt-inputs-long">
+                    <p>Comapany Name: <input id = "company-input"></p>
+                    <p>Comapany Location: <input id = "location-input"></p>
+                    <p>Hiring Manager Name: <input id = "hiring-input"></p>
+                    <p>Job Description (Include Position Info): <br><textarea id = "job-input"></textarea></p>
+                    <p>Work Experience (Copy Paste From Resume): <br><textarea id = "experience-input"></textarea></p>
+                </div>
+        
+                <p>[Step 3: Select the tone]</p>
+                <div id = "prompt-inputs-tick">
+                    <div>
+                        <input type = "checkbox" id ="professional" value = "pro" onclick="storeTick(value)">
+                        <label for="professional">Professional</label>
+                    </div>
+                    
+                    <div>
+                        <input type = "checkbox" id ="formal" value = "for" onclick="storeTick(value)">
+                    <label for="formal">Formal</label>
+                    </div>
+        
+                    <div>
+                        <input type = "checkbox" id ="optimistic" value = "opt" onclick="storeTick(value)">
+                        <label for="Optimistic">Optimistic</label>
+                    </div>
+                    
+                    <!--Will be added later v0.2-->
+                    <div>
+                        <input type = "checkbox" id ="temp1">
+                        <label for="temp1">temp1</label>
+                    </div>
+        
+                    <div>
+                        <input type = "checkbox" id ="temp2">
+                        <label for="temp2">temp2</label>
+                    </div>
+                    <div>
+                        <input type = "checkbox" id ="temp3">
+                        <label for="temp3">temp3</label>
+                    </div>
+                    <div>
+                        <input type = "checkbox" id ="temp4">
+                        <label for="temp4">temp4</label>
+                    </div>
+        
+                    <div>
+                        <input type = "checkbox" id ="temp5">
+                        <label for="temp5">temp5</label>
+                    </div>
+        
+                    <div>
+                        <input type = "checkbox" id ="temp6">
+                        <label for="temp6">temp6</label>
+                    </div>
+        
+                </div>
+                <button id = "generate" onclick = "apiGenerate()">Generate</button>
+            </div>
+
+            <div id = "right-panel">
+                <p class = "instructions">[Generated Cover Letter:]</p>
+                <textarea id="output-cl" class = "empty" readonly>Click Generate to Create a Letter</textarea>
+                <div>
+                    <button id = "download-pdf" onclick = "createPDF()">Download PDF</button>
+                </div>
+            </div>
         </div>
-
-        <!--Background tint of the popup-->
-        <div id = "popup-overlay"></div>
-
-        <!--Saved Users Display-->
-        <p>Saved Users:</p>
-        <div id = "saved-users-display">
-            <button id = "saved-users-box">
-                <p id = "saved-users-box-content"></p>
-            </button>
-        </div>
-
-        <button id = "delete-saved-user-button" onclick = "deleteUser()">Delete User</button>
-
-        <p>[Step 2: Fillout/Setup the letter]</p>
-
-        <div id = "prompt-inputs-date">
-            <p>Date: <input id = "date-input" type="text"></p>
-        </div>
-        <div id = "prompt-inputs-long">
-            <p>Comapany Name: <input id = "company-input"></p>
-            <p>Comapany Location: <input id = "location-input"></p>
-            <p>Hiring Manager Name: <input id = "hiring-input"></p>
-            <p>Job Description (Include Position Info): <br><textarea id = "job-input"></textarea></p>
-            <p>Work Experience (Copy Paste From Resume): <br><textarea id = "experience-input"></textarea></p>
-        </div>
-
-        <p>[Step 3: Select the tone]</p>
-        <div id = "prompt-inputs-tick">
-            <div>
-                <input type = "checkbox" id ="professional" value = "pro" onclick="storeTick(value)">
-                <label for="professional">Professional</label>
-            </div>
-            
-            <div>
-                <input type = "checkbox" id ="formal" value = "for" onclick="storeTick(value)">
-            <label for="formal">Formal</label>
-            </div>
-
-            <div>
-                <input type = "checkbox" id ="optimistic" value = "opt" onclick="storeTick(value)">
-                <label for="Optimistic">Optimistic</label>
-            </div>
-            
-            <!--Will be added later v0.2-->
-            <div>
-                <input type = "checkbox" id ="temp1">
-                <label for="temp1">temp1</label>
-            </div>
-
-            <div>
-                <input type = "checkbox" id ="temp2">
-                <label for="temp2">temp2</label>
-            </div>
-            <div>
-                <input type = "checkbox" id ="temp3">
-                <label for="temp3">temp3</label>
-            </div>
-            <div>
-                <input type = "checkbox" id ="temp4">
-                <label for="temp4">temp4</label>
-            </div>
-
-            <div>
-                <input type = "checkbox" id ="temp5">
-                <label for="temp5">temp5</label>
-            </div>
-
-            <div>
-                <input type = "checkbox" id ="temp6">
-                <label for="temp6">temp6</label>
-            </div>
-
-        </div>
-        <button id = "generate" onclick = "apiGenerate()">Generate</button>
-        <button id = "download-pdf" onclick = "createPDF()">Download PDF</button>
         
 
 

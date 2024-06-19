@@ -1,6 +1,6 @@
+//Function for updating the toneTick object
 function storeTick(value) {
     console.log("Ticked Value: "+value)//For Debugging
-
     switch(value) {
         case "pro":
             if (toneTicks.professional == false) {
@@ -91,6 +91,7 @@ function fillSavedUsersBox() {
 
     console.log("Local Storage Empty: "+(localStorage.getItem("user") == null));//For Debugging
 
+    //Checks if there is saved users. If there is retrieve the object and display it onto the box
     if (localStorage.getItem("user") == null) {
         savedUsersBoxContent.textContent = "No Saved Users";
         savedUsersBoxContent.classList.add("empty");//Changes the mode of the box
@@ -133,7 +134,6 @@ function createPDF() {
     if (user == null) {
         console.log("Error: Cannot create PDF without saved user");
     } else {
-        
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
@@ -150,6 +150,8 @@ function createPDF() {
 }
 
 //Saves company name + location + hiring manager name
+//Returns top level info as a object
+//Missing null input detection!!!
 function saveTopLevelInfo() {
     const companyInput = document.getElementById("company-input");
     const locationInput = document.getElementById("location-input");
@@ -168,28 +170,45 @@ function saveTopLevelInfo() {
 
 //Upon call -> formatPrompt()
 function apiGenerate() {
+    
+
     const companyInput = document.getElementById("company-input");
     const jobInput = document.getElementById("job-input");
     const experienceInput = document.getElementById("experience-input");
+    let outputCL = document.getElementById("output-cl");
+    //Resets the output box to its default mode
+    outputCL.attribute.add("readonly");
+    outputCL.classList.add("empty");
 
+    //Checks for any null inputs required for generation.
     if (companyInput.value == "" || experienceInput.value == "" || jobInput.value == "") {
         console.log("ERROR: Missing generation prompts");
-    } else {
+    } else {//Formats prompt
         let prompt = ("This is the company I am wokring for: "+companyInput.value+". This is the job description: "+jobInput.value+". This is my experience: "+experienceInput.value+". I want you to create a cover letter for me. Only create the body of the cover letter do not sign the letter.");
 
-        console.log(prompt);//For debugging
+        console.log(prompt);//For debugging, shows prompts in console before sending
+        promptSerialized = JSON.stringify(prompt);//Makes prompts in JSON before being sent
 
-        promptSerialized = JSON.stringify(prompt);
+        outputCL.value = "Generating...";
+
+        //API call
 
         fetch('http://127.0.0.1:5000/generate?prompt='+promptSerialized)
-            .then((response) => {
-                return response.json();
-            })
-            .then((myJson) => {
-                console.log("Generated CL: "+myJson.result);
-            });
-    }
+        .then((response) => {
+            return response.json();
+        })
+        .then((myJson) => {
+            console.log("Generated CL: "+myJson.result);
 
+            //Updates the contents of the output box
+            outputCL.classList.remove("empty");
+            outputCL.value = myJson.result;
+        });
+
+        outputCL.attributes.remove('readonly');
+      
+    }
 }
+
 
 

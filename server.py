@@ -1,4 +1,7 @@
-from flask import Flask, render_template, request
+import sys
+sys.path.append('.venv\Lib\site-packages')
+
+from flask import Flask, request
 from llama_cpp import Llama
 from flask import jsonify
 from flask_cors import CORS
