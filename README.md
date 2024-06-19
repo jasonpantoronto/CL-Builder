@@ -15,13 +15,19 @@ CL Builder allows you to expedite your cover letter creation processs by generat
 - Letter length tuning
 - User friendly web app UI
 
-**Dependencies**
+**Dependencies:**
 - Python 3.8 or above
 - teknium/OpenHermes-2.5-Mistral-7B
 
-**Method**
+**Method:**
 - CL-Builder is primarly build in JS with HTML serving as the frontend of the app
 - The creation of PDF files is made possible using the jsPDF liberary from ajax
 - JS fetch is used to make API calls to the server ran in Python
 - The backend is a Python server built with the Flask framework
 - The llama-cpp-python framework is used to host the open source LLM; OpenHermes-2.5-Mistral-7B.
+
+**Credits:**
+- [Flask Cors](https://pypi.org/project/Flask-Cors/)
+- [Flask](https://github.com/pallets/flask)
+- [llama-cpp-python](https://github.com/abetlen/llama-cpp-python)
+- [jsPDF](https://github.com/parallax/jsPDF)
