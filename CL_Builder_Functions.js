@@ -119,6 +119,77 @@ function getDate() {
     return (date.getFullYear()+"/"+date.getMonth()+"/"+date.getDay());
 }
 
-function createPrompt() {
-    
+//Makes PDF
+//Upon call -> getItem("User") -> saveTopLevelInfo()
+function createPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    //Retrieve saved user object
+    let user = JSON.parse(localStorage.getItem("user"));
+    let topLevelInfo = saveTopLevelInfo();
+
+    //Check if a pdf can be made
+    if (user == null) {
+        console.log("Error: Cannot create PDF without saved user");
+    } else {
+        
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        doc.setFontSize(12);
+
+        doc.text(user.fullName, 10, 10);
+        doc.text(user.email+" | ", 10, 15);
+        doc.text(user.number, 67, 15);
+        doc.text("Date: "+topLevelInfo.dateInput, 10, 25);
+        doc.save("a4.pdf");
+        
+
+    }
 }
+
+//Saves company name + location + hiring manager name
+function saveTopLevelInfo() {
+    const companyInput = document.getElementById("company-input");
+    const locationInput = document.getElementById("location-input");
+    const hiringInput = document.getElementById("hiring-input");
+    const dateInput = document.getElementById("date-input")
+
+    topLevelInfo = {
+        companyName: companyInput.value,
+        locationInput: locationInput.value,
+        hiringInput: hiringInput.value,
+        dateInput: dateInput.value
+    }
+
+    return topLevelInfo;
+}
+
+//Upon call -> formatPrompt()
+function apiGenerate() {
+    const companyInput = document.getElementById("company-input");
+    const jobInput = document.getElementById("job-input");
+    const experienceInput = document.getElementById("experience-input");
+
+    if (companyInput.value == "" || experienceInput.value == "" || jobInput.value == "") {
+        console.log("ERROR: Missing generation prompts");
+    } else {
+        let prompt = ("This is the company I am wokring for: "+companyInput.value+". This is the job description: "+jobInput.value+". This is my experience: "+experienceInput.value+". I want you to create a cover letter for me. Only create the body of the cover letter do not sign the letter.");
+
+        console.log(prompt);//For debugging
+
+        promptSerialized = JSON.stringify(prompt);
+
+        fetch('http://127.0.0.1:5000/generate?prompt='+promptSerialized)
+            .then((response) => {
+                return response.json();
+            })
+            .then((myJson) => {
+                console.log("Generated CL: "+myJson.result);
+            });
+    }
+
+}
+
+

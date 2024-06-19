@@ -168,12 +168,20 @@
                 grid: auto/auto auto auto
             }
 
-
+            
         
         </style>
+
     </head>
     <body>
-        <script src="CL_Builder_Functions.js"></script>
+        <!--jsPDF related imports-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"> </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        
+        <!--UI Related Functions-->
+        <script src = "CL_Builder_Functions.js"></script>
 
         <p id = "logo">CL Builder Alpha v0.1📝</p>
         <p class = "instructions">[Step 1: Add/Edit a user]</p>
@@ -212,12 +220,13 @@
 
         <p>[Step 2: Fillout/Setup the letter]</p>
 
-        <div id = "prompt inputs-date">
+        <div id = "prompt-inputs-date">
             <p>Date: <input id = "date-input" type="text"></p>
         </div>
         <div id = "prompt-inputs-long">
             <p>Comapany Name: <input id = "company-input"></p>
-            <p>Hiring Manager Name: <input id = "company-input"></p>
+            <p>Comapany Location: <input id = "location-input"></p>
+            <p>Hiring Manager Name: <input id = "hiring-input"></p>
             <p>Job Description (Include Position Info): <br><textarea id = "job-input"></textarea></p>
             <p>Work Experience (Copy Paste From Resume): <br><textarea id = "experience-input"></textarea></p>
         </div>
@@ -269,10 +278,14 @@
             </div>
 
         </div>
-        <script>
+        <button id = "generate" onclick = "apiGenerate()">Generate</button>
+        <button id = "download-pdf" onclick = "createPDF()">Download PDF</button>
         
-            
 
+
+        
+        <script type = "text/javascript">
+            
             newUserWindow = document.getElementById("new-user-window");
             popupOverlay = document.getElementById("popup-overlay");
             let savedUsersBoxContent = document.getElementById("saved-users-box-content");
@@ -289,6 +302,9 @@
                 formal: false,
                 optimistic: false,
             }
+            
         </script>
+
+    
     </body>
 </html>
